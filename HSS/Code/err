@@ -1,0 +1,217 @@
+In file included from util.hpp:7:0,
+                 from main.cpp:11:
+mat2hss.hpp: In function ‘hss<matrix<T> > mat2hss(T*, int, int, int*, int, int*, int, T)’:
+mat2hss.hpp:121:23: warning: there are no arguments to ‘testprint12’ that depend on a template parameter, so a declaration of ‘testprint12’ must be available [-fpermissive]
+  testprint12(ch,nNodes);
+                       ^
+mat2hss.hpp: In instantiation of ‘hss<matrix<T> > mat2hss(T*, int, int, int*, int, int*, int, T) [with T = double]’:
+main.cpp:54:72:   required from here
+mat2hss.hpp:184:25: warning: ‘setarray’ was not declared in this scope, and no declarations were found by argument-dependent lookup at the point of instantiation [-fpermissive]
+                 setarray(A,nCols,l[i].begin,l[i].end,l[i].end+1,nCols-1, T1, nC);
+                         ^
+In file included from main.cpp:11:0:
+util.hpp:49:6: note: ‘template<class T> void setarray(T*, int, int, int, int, int, T*, int)’ declared here, later in the translation unit
+ void setarray(T *A, int nCols, int ibegin1, int iend1, int jbegin1, int jend1, T *B, int stride)
+      ^
+In file included from util.hpp:7:0,
+                 from main.cpp:11:
+mat2hss.hpp:249:13: warning: ‘setarray’ was not declared in this scope, and no declarations were found by argument-dependent lookup at the point of instantiation [-fpermissive]
+     setarray(A,nCols,l[i].end+1,nCols-1,l[i].begin,l[i].end, T2, nC);
+             ^
+In file included from main.cpp:11:0:
+util.hpp:49:6: note: ‘template<class T> void setarray(T*, int, int, int, int, int, T*, int)’ declared here, later in the translation unit
+ void setarray(T *A, int nCols, int ibegin1, int iend1, int jbegin1, int jend1, T *B, int stride)
+      ^
+In file included from util.hpp:7:0,
+                 from main.cpp:11:
+mat2hss.hpp:291:20: warning: ‘transpose’ was not declared in this scope, and no declarations were found by argument-dependent lookup at the point of instantiation [-fpermissive]
+    T *tT2=transpose(T2,nR,nC);
+                    ^
+In file included from main.cpp:11:0:
+util.hpp:66:4: note: ‘template<class T> T* transpose(T*, int, int)’ declared here, later in the translation unit
+ T *transpose(T *A, int nRow, int nCol)
+    ^
+In file included from util.hpp:7:0,
+                 from main.cpp:11:
+mat2hss.hpp:298:16: warning: ‘transpose’ was not declared in this scope, and no declarations were found by argument-dependent lookup at the point of instantiation [-fpermissive]
+    T2=transpose(QCol.R,QCol.rk,QCol.nCol);
+                ^
+In file included from main.cpp:11:0:
+util.hpp:66:4: note: ‘template<class T> T* transpose(T*, int, int)’ declared here, later in the translation unit
+ T *transpose(T *A, int nRow, int nCol)
+    ^
+In file included from util.hpp:7:0,
+                 from main.cpp:11:
+mat2hss.hpp:326:12: warning: ‘setarray’ was not declared in this scope, and no declarations were found by argument-dependent lookup at the point of instantiation [-fpermissive]
+    setarray(A,nCols, ls1[ns1]-2,ls1[ns1-1]-1,ws1[ns1-2],ws1[ns1-1]-1, B1, nC);
+            ^
+In file included from main.cpp:11:0:
+util.hpp:49:6: note: ‘template<class T> void setarray(T*, int, int, int, int, int, T*, int)’ declared here, later in the translation unit
+ void setarray(T *A, int nCols, int ibegin1, int iend1, int jbegin1, int jend1, T *B, int stride)
+      ^
+In file included from util.hpp:7:0,
+                 from main.cpp:11:
+mat2hss.hpp:336:12: warning: ‘setarray’ was not declared in this scope, and no declarations were found by argument-dependent lookup at the point of instantiation [-fpermissive]
+    setarray(A, nCols, ws2[ns2-2],ws2[ns1-1]-1,ls2[ns2-2], ls2[ns2-1]-1, B2, nC);
+            ^
+In file included from main.cpp:11:0:
+util.hpp:49:6: note: ‘template<class T> void setarray(T*, int, int, int, int, int, T*, int)’ declared here, later in the translation unit
+ void setarray(T *A, int nCols, int ibegin1, int iend1, int jbegin1, int jend1, T *B, int stride)
+      ^
+In file included from util.hpp:7:0,
+                 from main.cpp:11:
+mat2hss.hpp:406:30: error: ‘struct QResult<double>’ has no member named ‘nCols’
+        A[s*nCols+t]=T1[rIndex*QRow.nCols+cIndex];
+                              ^
+mat2hss.hpp:461:22: warning: ‘transpose’ was not declared in this scope, and no declarations were found by argument-dependent lookup at the point of instantiation [-fpermissive]
+      T *tT2=transpose(T2,nR,nC);
+                      ^
+In file included from main.cpp:11:0:
+util.hpp:66:4: note: ‘template<class T> T* transpose(T*, int, int)’ declared here, later in the translation unit
+ T *transpose(T *A, int nRow, int nCol)
+    ^
+In file included from util.hpp:7:0,
+                 from main.cpp:11:
+mat2hss.hpp:468:16: warning: ‘transpose’ was not declared in this scope, and no declarations were found by argument-dependent lookup at the point of instantiation [-fpermissive]
+    T2=transpose(QCol.R, QCol.rk,QCol.nCol);
+                ^
+In file included from main.cpp:11:0:
+util.hpp:66:4: note: ‘template<class T> T* transpose(T*, int, int)’ declared here, later in the translation unit
+ T *transpose(T *A, int nRow, int nCol)
+    ^
+In file included from util.hpp:7:0,
+                 from main.cpp:11:
+mat2hss.hpp:493:9: warning: ‘move’ was not declared in this scope, and no declarations were found by argument-dependent lookup at the point of instantiation [-fpermissive]
+     move(A,nCols,ws2[j]+r1,ws2[ns1-2]+r1-1,ls2[j],ls2[j+1]-1,ws2[j],ws2[ns2-2]-1,ls2[j],ls2[j+1]-1);
+         ^
+In file included from main.cpp:11:0:
+util.hpp:81:6: note: ‘template<class T> void move(T*, int, int, int, int, int, int, int, int, int)’ declared here, later in the translation unit
+ void move(T *A, int nCol, int si1, int si2, int sj1, int sj2, int ti1, int ti2, int tj1, int tj2)
+      ^
+In file included from util.hpp:7:0,
+                 from main.cpp:11:
+mat2hss.hpp:503:6: error: ‘struct QResult<double>’ has no member named ‘nCols’
+    nC=QRow.nCols;
+      ^
+mat2hss.hpp:523:9: warning: ‘move’ was not declared in this scope, and no declarations were found by argument-dependent lookup at the point of instantiation [-fpermissive]
+     move(A,nCols,ls1[j],ls1[j+1]-1,ws1[j]+r2,ws1[ns2-2]+r2-1,ls1[j],ls1[j+1]-1,ws1[j],ws1[ns1-2]-1);
+         ^
+In file included from main.cpp:11:0:
+util.hpp:81:6: note: ‘template<class T> void move(T*, int, int, int, int, int, int, int, int, int)’ declared here, later in the translation unit
+ void move(T *A, int nCol, int si1, int si2, int sj1, int sj2, int ti1, int ti2, int tj1, int tj2)
+      ^
+In file included from util.hpp:7:0,
+                 from main.cpp:11:
+mat2hss.hpp:532:6: error: ‘struct QResult<double>’ has no member named ‘nCols’
+    nR=QCol.nCols;
+      ^
+mat2hss.hpp:562:10: warning: ‘memcpy’ was not declared in this scope, and no declarations were found by argument-dependent lookup at the point of instantiation [-fpermissive]
+    memcpy(tmp,tHss.U[tch.lchild].elem,sizeof(T)*sz*sz);
+          ^
+In file included from btree.hpp:4:0,
+                 from main.cpp:12:
+/usr/include/string.h:42:14: note: ‘void* memcpy(void*, const void*, size_t)’ declared here, later in the translation unit
+ extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
+              ^
+In file included from util.hpp:7:0,
+                 from main.cpp:11:
+mat2hss.hpp:563:10: warning: ‘memcpy’ was not declared in this scope, and no declarations were found by argument-dependent lookup at the point of instantiation [-fpermissive]
+    memcpy(tmp1,tHss.U[tch.lchild].elem+sz*sz,sizeof(T)*(nR-sz)*sz);
+          ^
+In file included from btree.hpp:4:0,
+                 from main.cpp:12:
+/usr/include/string.h:42:14: note: ‘void* memcpy(void*, const void*, size_t)’ declared here, later in the translation unit
+ extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
+              ^
+In file included from util.hpp:7:0,
+                 from main.cpp:11:
+mat2hss.hpp:583:10: warning: ‘memcpy’ was not declared in this scope, and no declarations were found by argument-dependent lookup at the point of instantiation [-fpermissive]
+    memcpy(tmp2,tHss.V[tch.lchild].elem,sizeof(T)*sz*sz);
+          ^
+In file included from btree.hpp:4:0,
+                 from main.cpp:12:
+/usr/include/string.h:42:14: note: ‘void* memcpy(void*, const void*, size_t)’ declared here, later in the translation unit
+ extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
+              ^
+In file included from util.hpp:7:0,
+                 from main.cpp:11:
+mat2hss.hpp:584:10: warning: ‘memcpy’ was not declared in this scope, and no declarations were found by argument-dependent lookup at the point of instantiation [-fpermissive]
+    memcpy(tmp3,tHss.V[tch.lchild].elem+sz*sz,sizeof(T)*(nR-sz)*sz);
+          ^
+In file included from btree.hpp:4:0,
+                 from main.cpp:12:
+/usr/include/string.h:42:14: note: ‘void* memcpy(void*, const void*, size_t)’ declared here, later in the translation unit
+ extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
+              ^
+In file included from mat2hss.hpp:4:0,
+                 from util.hpp:7,
+                 from main.cpp:11:
+rQR.hpp: In instantiation of ‘QResult<T> megclpv(T*, int, int, T) [with T = double]’:
+mat2hss.hpp:219:20:   required from ‘hss<matrix<T> > mat2hss(T*, int, int, int*, int, int*, int, T) [with T = double]’
+main.cpp:54:72:   required from here
+rQR.hpp:74:8: warning: ‘memset’ was not declared in this scope, and no declarations were found by argument-dependent lookup at the point of instantiation [-fpermissive]
+  memset(piv,0,sizeof(T)*mn);
+        ^
+In file included from btree.hpp:4:0,
+                 from main.cpp:12:
+/usr/include/string.h:62:14: note: ‘void* memset(void*, int, size_t)’ declared here, later in the translation unit
+ extern void *memset (void *__s, int __c, size_t __n) __THROW __nonnull ((1));
+              ^
+In file included from mat2hss.hpp:4:0,
+                 from util.hpp:7,
+                 from main.cpp:11:
+rQR.hpp:77:8: warning: ‘memset’ was not declared in this scope, and no declarations were found by argument-dependent lookup at the point of instantiation [-fpermissive]
+  memset(vn,0,sizeof(T)*nCol);
+        ^
+In file included from btree.hpp:4:0,
+                 from main.cpp:12:
+/usr/include/string.h:62:14: note: ‘void* memset(void*, int, size_t)’ declared here, later in the translation unit
+ extern void *memset (void *__s, int __c, size_t __n) __THROW __nonnull ((1));
+              ^
+In file included from mat2hss.hpp:4:0,
+                 from util.hpp:7,
+                 from main.cpp:11:
+rQR.hpp:80:8: warning: ‘memset’ was not declared in this scope, and no declarations were found by argument-dependent lookup at the point of instantiation [-fpermissive]
+  memset(R,0,sizeof(T)*nCol);
+        ^
+In file included from btree.hpp:4:0,
+                 from main.cpp:12:
+/usr/include/string.h:62:14: note: ‘void* memset(void*, int, size_t)’ declared here, later in the translation unit
+ extern void *memset (void *__s, int __c, size_t __n) __THROW __nonnull ((1));
+              ^
+In file included from mat2hss.hpp:4:0,
+                 from util.hpp:7,
+                 from main.cpp:11:
+rQR.hpp:169:16: error: no matching function for call to ‘min(int&, double)’
+   mn = std::min(rk,rk*imax);
+                ^
+In file included from /usr/include/c++/5/bits/char_traits.h:39:0,
+                 from /usr/include/c++/5/ios:40,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from main.cpp:9:
+/usr/include/c++/5/bits/stl_algobase.h:195:5: note: candidate: template<class _Tp> const _Tp& std::min(const _Tp&, const _Tp&)
+     min(const _Tp& __a, const _Tp& __b)
+     ^
+/usr/include/c++/5/bits/stl_algobase.h:195:5: note:   template argument deduction/substitution failed:
+In file included from mat2hss.hpp:4:0,
+                 from util.hpp:7,
+                 from main.cpp:11:
+rQR.hpp:169:16: note:   deduced conflicting types for parameter ‘const _Tp’ (‘int’ and ‘double’)
+   mn = std::min(rk,rk*imax);
+                ^
+In file included from /usr/include/c++/5/bits/char_traits.h:39:0,
+                 from /usr/include/c++/5/ios:40,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from main.cpp:9:
+/usr/include/c++/5/bits/stl_algobase.h:243:5: note: candidate: template<class _Tp, class _Compare> const _Tp& std::min(const _Tp&, const _Tp&, _Compare)
+     min(const _Tp& __a, const _Tp& __b, _Compare __comp)
+     ^
+/usr/include/c++/5/bits/stl_algobase.h:243:5: note:   template argument deduction/substitution failed:
+In file included from mat2hss.hpp:4:0,
+                 from util.hpp:7,
+                 from main.cpp:11:
+rQR.hpp:169:16: note:   deduced conflicting types for parameter ‘const _Tp’ (‘int’ and ‘double’)
+   mn = std::min(rk,rk*imax);
+                ^

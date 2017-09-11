@@ -266,7 +266,7 @@ hss< matrix<T> > mat2hss(T *A, int nRows, int nCols, int *tr, int nNodes, int *m
 		 		r1=nR;
 		  	}
 
-       	  	testMatrix(T1,nC,0,nR-1,0,nC-1);
+            testMatrix(T1,nC,0,nR-1,0,nC-1);
 		  	QRow = megclpv(T1,nR,nC,par);
 		  	printf("%d\n",__LINE__);
 		  	tHss.U[i].elem=QRow.Q;
@@ -282,15 +282,16 @@ hss< matrix<T> > mat2hss(T *A, int nRows, int nCols, int *tr, int nNodes, int *m
 
 		  	ws1[ns1]=l[i].end+1;
 
-		  	for(int s=ls1[ns1];s<=ls1[ns1+1]-1;s++)
+		  	for(int s=ls1[ns1];s<=ls1[ns1+1]-1;s++)  // A(ls1(ns1):ls1(ns1+1)-1,l(i,2)+1:N) = T1(:,end-(N-l(i,2))+1:end); int rIndex=QCol.nCol-1-(nCols-1-s);
 		  	{
-		  		int rIndex=0;
+		  		int rIndex=s-ls1[ns1];
 		  		for(int t=l[i].end+1;t<=nCols-1;t++)
 		  		{
+                    int cIndex = QRow.nCol-1-(nCols-1-t);
 		  			A[s*nCols+t]=T1[rIndex*QRow.nCol+t];
 
 		  		}
-		  		rIndex++;
+//		  		rIndex++;
 		  	}
 			if(ns2==0)
 			{
@@ -379,10 +380,13 @@ hss< matrix<T> > mat2hss(T *A, int nRows, int nCols, int *tr, int nNodes, int *m
 
 			nR=ls1[ns1-1]-ls1[ns1-2];
 			nC=ws1[ns1-1]-ws1[ns1-2];
+            printf("parent line %d nR=%d nC=%d ws=%d ws=%d\n", __LINE__,nR,nC,ws1[ns1-1],ws1[ns1-2]);
 
 			T *B1=new T[nR*nC];
+            printf("parent line %d\n", __LINE__);
 			setarray(A,nCols, ls1[ns1]-2,ls1[ns1-1]-1,ws1[ns1-2],ws1[ns1-1]-1, B1, nC);
 
+            printf("parent line %d\n", __LINE__);
 
 			tHss.B[tch.lchild].elem=B1;
 			tHss.B[tch.lchild].nRows=nR;
@@ -395,7 +399,7 @@ hss< matrix<T> > mat2hss(T *A, int nRows, int nCols, int *tr, int nNodes, int *m
 
 			setarray(A, nCols, ws2[ns2-2],ws2[ns1-1]-1,ls2[ns2-2], ls2[ns2-1]-1, B2, nC);
 
-
+            printf("parent line %d\n", __LINE__);
 
 			tHss.B[tch.rchild].elem=B2;
 			tHss.B[tch.rchild].nRows=nR;
