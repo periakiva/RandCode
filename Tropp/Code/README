@@ -1,0 +1,222 @@
+RSVDPACK: Implementations of fast algorithms for computing the low rank SVD, 
+interpolative and CUR decompositions, using randomized sampling. 
+Given, a real mxn matrix A and a rank parameter 
+k<< min(m,n) (or optionally, a tolerance parameter instead of rank) the 
+rsvd routines compute  
+U_k, Sigma_k, and V_k
+where U_k is mxk, Sigma_k is kxk, and V_k is nxk, such that:
+A \approx U_k Sigma_k V^T_k
+
+Included is a blocked randomized routine which computes a so called QB 
+decompositon of A such that,  
+A \approx Q_k B_k, from which other decompositions may be efficiently computed.
+
+The interpolative decomposition routines return a single or double sided ID of a matrix, 
+while the CUR decomposition can decompose a matrix into the form A \approx C U R 
+where C and R contain a selection of the columns and rows, respectively of the 
+original A.
+
+For more detailed information on the implemented algorithms see:
+http://arxiv.org/abs/1502.05366
+http://arxiv.org/abs/1412.8447
+http://arxiv.org/abs/1503.07157
+
+There are several codes: for single processor (with GNU GSL), multiprocessor 
+(with Intel MKL) and GPU (with the CULA library for NVIDIA CUDA capable cards 
+and with the NVIDIA cuBLAS library).
+A simple implementation in Matlab (or Octave) is also provided for 
+illustration purposes. The majority of the algorithms are currently implemented with 
+the multi-core Intel MKL and GPU CULA and cuBLAS versions. Dependencies are as follows: 
+
+multi_core_mkl_code : uses MKL for BLAS and LAPACK
+multi_core_mkl_code_64bit : uses MKL for BLAS and LAPACK with 64 bit support for large matrices
+nvidia_gpu_cula_code : uses CULA for BLAS and most of LAPACK, MKL for some of LAPACK
+nvidia_gpu_cublas_code : uses cuBLAS for BLAS and MKL for LAPACK
+
+In addition, experimental Matlab mex-file support for the multi-core and 
+GPU C codes is available with illustrating examples of calling some of the 
+multi-core and GPU functions.
+
+These codes were written by Sergey Voronin, 2014-2017 as part of a collaborative project with 
+Per-Gunnar Martinsson.
+Tested with GSL-1.16, icc/mkl 14.03, cuda 6.5 & 7.5, cula r18. Should also work 
+with more recent version of the software. 
+
+Algorithms used based on those originally described in the article: 
+"Finding structure with randomness: Probabilistic algorithms for constructing approximate matrix decompositions," N. Halko, P.G. Martinsson, J. Tropp, SIAM Review, 53(2), 2011
+and in the other mentioned articles, with some modifications. 
+See the arxiv articles for more details.
+
+============ summary of installation and usage ==============
+
+One must install the GNU GSL development libraries, Intel MKL (and the intel C compiler), 
+NVIDIA CUDA libraries and the CULA Dense packages. 
+Please refer to their corresponding documentations.
+http://www.gnu.org/software/gsl/
+https://software.intel.com/en-us/intel-mkl
+https://developer.nvidia.com/cuda-zone
+http://www.culatools.com/dense/
+
+NOTE on software: The GSL library is free to download and distributed under a GNU license. A free 
+version of the CULA dense library is available for download at 
+http://www.culatools.com/downloads/ , which includes all the functions 
+necessary for RSVDPACK (matrix-matrix and matrix-vector ops, QR, SVD, etc). 
+The Intel MKL library is generally available in commercial form. 
+The free, non-commercial versions of the Intel MKL library and the 
+C++ compiler can be obtained from Intel by qualified users. Please 
+see: https://software.intel.com/en-us/qualify-for-free-software .  
+
+For simple illustration of the randomized SVD algorithms, see the 
+Matlab implementation. Each C implementation resides in its own subfolder 
+with a compile.sh file. After 
+necessary paths (PATH variable, LD_LIBRARY_PATH) are set for referencing 
+gsl, mkl, and cuda/cula, this file 
+should be modified to reflect any local system changes and executed to yield the 
+driver executable in each case. Paths for mkl are usually set via:
+$ source /opt/intel/bin/compilervars.sh intel64
+For cuda/cula, source the script nvidia_gpu_cula_code/setup_paths.sh after checking 
+that the paths are correct for your system.  
+
+In order to make a test matrix, use the provide make_matrix_binary.m script which can be run 
+from Octave or Matlab. Note that this script writes a binary matrix file.
+
+Once the matrix is made one can use any of the drivers to compute the low 
+rank SVD or the ID and CUR decompositions. Inside the main loop of the programs one 
+sets the rank k <= min(nrows,ncols) 
+or the tolerance parameter if one of the autorank methods is used.
+Additional parameters such as the block size apply to the block randomized methods.
+
+The following functions are provided for SVD, single and double sided ID, and CUR decompositons:
+
+// low rank SVD
+low_rank_svd_decomp_fixed_rank_or_prec(mat A, int k, double TOL,
+  int *frank, mat **U, mat **S, mat **V);
+low_rank_svd_rand_decomp_fixed_rank(mat *A, int k, int p, int vnum,
+  int q, int s, mat **U, mat **S, mat **V);
+low_rank_svd_blockrand_decomp_fixed_rank_or_prec(mat *A, int k, int p, double TOL,
+  int vnum, int kstep, int q, int s, int *frank, mat **U, mat **S, mat **V);
+
+// one sided ID
+id_decomp_fixed_rank_or_prec(mat *A, int k, double TOL, int *frank, vec **I, mat **T);
+id_rand_decomp_fixed_rank(mat *A, int k, int p, int q, int s, vec **I, mat **T);
+id_blockrand_decomp_fixed_rank_or_prec(mat *A, int k, int p, double TOL,
+  int kstep, int q, int s, int *frank, vec **I, mat **T);
+
+// two sided ID
+id_two_sided_decomp_fixed_rank_or_prec(mat *A, int k, double TOL,
+  int *frank, vec **Icol, vec **Irow, mat **T, mat **S);
+id_two_sided_rand_decomp_fixed_rank(mat *A, int k, int p, int q, int s,
+  vec **Icol, vec **Irow, mat **T, mat **S);
+id_two_sided_blockrand_decomp_fixed_rank_or_prec(mat *A, int k, int p, double TOL,
+  int kstep, int q, int s, int *frank, vec **Icol, vec **Irow, mat **T, mat **S);
+
+// CUR 
+cur_decomp_fixed_rank_or_prec(mat *A, int k, double TOL,
+  int *frank, mat **C, mat **U, mat **R);
+cur_rand_decomp_fixed_rank(mat *A, int k, int p, int q, int s,
+  mat **C, mat **U, mat **R);
+cur_blockrand_decomp_fixed_rank_or_prec(mat *A, int k, int p, double TOL,
+  int kstep, int q, int s, int *frank, mat **C, mat **U, mat **R);
+
+
+
+=======================
+
+// declare matrices and vectors
+mat *M, *U, *S, *V, *T, *S, *C, *R;
+vec *Icol, *Irow;
+
+// load matrix M from file
+M = matrix_load_from_binary_file(mfile);
+m = M->nrows; n = M->ncols;
+
+// set svd rank (< min(m,n)) if not using the autorank version
+// for autorank, define instead the TOL parameter (i.e. TOL = 0.1)
+// set rank, block size, oversampling, power scheme and orthogonalization parameters
+k = 300;
+kstep = 100;
+p = 20;
+q = 2;
+s = 1;
+
+// call random SVD (via the new functions or the older variants)
+low_rank_svd_rand_decomp_fixed_rank(M, k, p, vnum, q, s, &U, &S, &V);
+low_rank_svd_blockrand_decomp_fixed_rank_or_prec(M, k, p, TOL,
+  vnum, kstep, q, s, &frank, &U, &S, &V);
+
+randomized_low_rank_svd1(M, k, &U, &S, &V);
+randomized_low_rank_svd2(M, k, &U, &S, &V);
+randomized_low_rank_svd3(M, k, q, s, &U, &S, &V);
+randomized_low_rank_svd4(M, kblocksize, numblocks, q, &U, &S, &V);
+randomized_low_rank_svd2_autorank1(M, frac, TOL, &U, &S, &V);
+randomized_low_rank_svd2_autorank2(M, kblocksize, TOL, &U, &S, &V);
+randomized_low_rank_svd3_autorank2(M, kblocksize, TOL, q, s, &U, &S, &V);
+
+// call ID, dsID, CUR block randomized routines
+id_decomp_fixed_rank_or_prec(M, k, TOL, &frank, &I, &T);
+id_two_sided_blockrand_decomp_fixed_rank_or_prec(M, k, p, TOL, kstep, q, s, &frank, &Icol, &Irow, &T, &S);
+cur_blockrand_decomp_fixed_rank_or_prec(M, k, p, TOL, kstep, q, s, &frank, &C, &U, &R);
+
+// write results to disk
+matrix_write_to_binary_file(U, "data/U.bin");
+matrix_write_to_binary_file(S, "data/S.bin");
+matrix_write_to_binary_file(V, "data/V.bin");
+
+=======================
+
+Notice that for the multiprocessor OpenMP based code, one can control the number of 
+threads used via an environmental variable. For instance, in bash type:
+export OMP_NUM_THREADS=6
+to use 6 threads. You should use as many threads as there are physical cores for 
+best results, but the optimal configuration differs for different systems.
+
+Example run with GPU code
+
+First, make the matrix using the provided script:
+$ matlab -nodesktop
+> make_matrix_binary2 
+> ls data/A_mat_6kx12k.bin
+$
+
+Check to make sure nvidia libs are setup ok:
+$ nvidia-smi 
+
+Switch to correct directory
+$ cd nvidia_gpu_cula_code 
+
+Source paths to cuda/cula
+$ source setup_paths.sh
+
+Compile
+$./compile.sh
+
+Run:
+$./driver_gpu_nvidia_cula1
+Initializing CULA
+culaVersion is 18000
+loading matrix from ../data/A_mat_6kx12k.bin
+initializing M of size 6000 by 12000
+done..
+sizes of M are 6000 by 12000
+calling random SVD with k = 1000
+.........
+elapsed time: about 13 seconds
+normM = 180.600893 ; normU = 31.622777 ; normS = 176.342348 ; normV = 31.622777 ; normP = 176.342348
+percent_error between M and U S V^T = 21.587897
+$
+
+Example run with Matlab Mex Interface of GPU code (run C GPU code inside of Matlab)
+
+$ cd matlab_code/mex_code_nvidia_gpu_cula/
+$ source setup_vars.sh
+$ ./compile_mex.sh
+$ matlab -nodesktop
+>> A = randn(5000,6000);
+>> k = 4800;
+>> p = 20;
+>> vnum = 2;
+>> q = 3;
+>> s = 1;
+>> [U,S,V] = low_rank_svd_rand_decomp_fixed_rank_cula_ifce(A,k,p,vnum,q,s);
+>> norm(A - U*S*V')/norm(A)
+
