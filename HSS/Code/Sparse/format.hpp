@@ -9,6 +9,11 @@ using namespace std;
 
 namespace format
 {
+    //pre declaration
+    template<typename T> class Sparse;
+    template<typename T> class Dense;
+    template<typename T> class Vector;
+
     //only support double now.
     template<typename T>
     class Sparse
@@ -24,10 +29,11 @@ namespace format
         //Sparse operator=(Sparse B);
         //Sparse operator=(Dense B);
         T operator()(int i, int j);
+        Vector<T>& operator*(Vector<T> v);
 
-        Dense& getDenseSubmatrix(vector<int> row_ind, vector<int> col_ind);
+        Dense<T>& getDenseSubmatrix(vector<int> row_ind, vector<int> col_ind);
 
-        Sparse& choleskyFactorization();
+        Sparse<T>& choleskyFactorization();
 
     private:
         //CSR form
@@ -35,9 +41,9 @@ namespace format
         vector<int> col_ind;
         vector<int> row_ptr;
 
-        vector::iterator val_iter;
-        vector::iterator col_iter;
-        vector::iterator row_iter;
+        typename vector<T>::iterator val_iter;
+        vector<int>::iterator col_iter;
+        vector<int>::iterator row_iter;
         //size of row & col
         int row_size;
         int col_size;
@@ -48,21 +54,43 @@ namespace format
         int min_lowrank_size = 50;
         int oversample = 10;
     };
+
     template<typename T>
     class Dense
     {
     public:
         Dense();
-        Dense(Sparse S, vector<int> ri, vector<int> ci);
+        Dense(Sparse<T>& S, vector<int> ri, vector<int> ci);
         ~Dense();
         T operator()(int i, int j);
-        Dense& operator*(Dense B);
+        Dense<T>& operator*(Dense<T>& B);
+        Vector<T>& operator*(Vector<T>& v);
     private:
         int row_size;
         int col_size;
         vector<int> row_ind;
         vector<int> col_ind;
-        vector<vector<T> > val;
+        T* val;
+    };
+
+    template<typename T>
+    class Vector
+    {
+    public:
+        Vector();
+        Vector(int n, bool rand_init = true);
+        ~Vector();
+
+
+        //extensive add
+        Vector& operator+(Vector v);
+        Vector& operator-(Vector v);
+
+        //Inner product
+        T& operator*(Vector v);
+
+        int dim;
+        T* val;
     };
 
 }

@@ -33,7 +33,9 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="format.cpp" />
-		<Unit filename="format.h" />
+		<Unit filename="format.hpp" />
+		<Unit filename="hss.cpp" />
+		<Unit filename="hss.hpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

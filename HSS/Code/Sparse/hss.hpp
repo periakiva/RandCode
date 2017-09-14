@@ -3,7 +3,7 @@
 
 #include <algorithm>
 
-//This is a sparse HSS implementation.
+//This is a sparse multifrontal-HSS implementation.
 
 namespace hss
 {
@@ -22,12 +22,12 @@ namespace hss
     };
 
 
-    class hss
+    class SparseHSS
     {
     public:
 
     private:
-        btree& htree;
+        btree& etree;
 
 
     };
